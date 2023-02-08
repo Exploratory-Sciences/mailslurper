@@ -1,0 +1,16 @@
+inputSet:
+  name: default
+  identifier: default
+  orgIdentifier: ExploratorySciences
+  projectIdentifier: MetaPlay
+  pipeline:
+    identifier: mailslurperrelease
+    template:
+      templateInputs:
+        properties:
+          ci:
+            codebase:
+              build:
+                type: branch
+                spec:
+                  branch: <+trigger.branch>

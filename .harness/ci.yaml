@@ -1,0 +1,123 @@
+pipeline:
+  name: mailslurper-ci
+  identifier: mailslurperci
+  template:
+    templateRef: Docker_CI
+    versionLabel: "1"
+    templateInputs:
+      stages:
+        - stage:
+            identifier: Setup
+            type: Deployment
+            spec:
+              serviceConfig:
+                serviceRef: mailslurper
+        - stage:
+            identifier: build
+            type: CI
+            spec:
+              execution:
+                steps:
+                  - step:
+                      identifier: Build_and_Push_Temp_Image
+                      type: BuildAndPushECR
+                      spec:
+                        buildArgs:
+                          AWS_DEFAULT_REGION: us-east-2
+                          AWS_ACCESS_KEY_ID: <+pipeline.variables.aws_access_key>
+                          AWS_SECRET_ACCESS_KEY: <+pipeline.variables.aws_secret_key>
+                          PIP_EXTRA_INDEX_URL: <+pipeline.variables.pip_extra_index_url>
+                          BASE_IMAGE: 139426992374.dkr.ecr.us-east-2.amazonaws.com/python:3.9
+        - stage:
+            identifier: publish
+            type: CI
+            spec:
+              execution:
+                steps:
+                  - parallel:
+                      - step:
+                          identifier: Publish
+                          type: BuildAndPushECR
+                          spec:
+                            buildArgs:
+                              AWS_DEFAULT_REGION: us-east-2
+                              AWS_ACCESS_KEY_ID: <+pipeline.variables.aws_access_key>
+                              AWS_SECRET_ACCESS_KEY: <+pipeline.variables.aws_secret_key>
+                              PIP_EXTRA_INDEX_URL: <+pipeline.variables.pip_extra_index_url>
+                              BASE_IMAGE: 139426992374.dkr.ecr.us-east-2.amazonaws.com/python:3.9
+      properties:
+        ci:
+          codebase:
+            repoName: mailslurper
+            build: <+input>
+      variables:
+        - name: ecr_region
+          type: String
+          value: us-east-2
+        - name: ecr_account_id
+          type: String
+          value: "139426992374"
+        - name: ecr_repository
+          type: String
+          value: mailslurper
+        - name: aws_access_key
+          type: Secret
+          value: devmetaplayawsaccesskey
+        - name: aws_secret_key
+          type: Secret
+          value: devawssecretkey
+        - name: run_tests
+          type: String
+          value: "true"
+        - name: run_lint
+          type: String
+          value: "true"
+        - name: cpu
+          type: Number
+          value: 2
+        - name: memory
+          type: String
+          value: 8Gi
+        - name: dockerfile
+          type: String
+          value: Dockerfile
+        - name: docker_context
+          type: String
+          value: /harness
+        - name: dev_deploy
+          type: String
+          value: "false"
+        - name: qa_deploy
+          type: String
+          value: "false"
+        - name: timeout
+          type: String
+          value: 10m
+        - name: config_branch
+          type: String
+          value: <+input>
+        - name: helm_args
+          type: String
+          value: <+input>
+        - name: pip_extra_index_url
+          type: Secret
+          value: pipmetaplayindexurl
+        - name: artifactory_username
+          type: Secret
+          value: jfrogciusername
+        - name: artifactory_token
+          type: Secret
+          value: jfrogcitoken
+        - name: has_docker_image
+          type: String
+          value: "true"
+        - name: has_helm_chart
+          type: String
+          value: "true"
+        - name: docker_multistage_build
+          type: String
+          value: "false"
+  tags:
+    mailslurper: ""
+  projectIdentifier: MetaPlay
+  orgIdentifier: ExploratorySciences
