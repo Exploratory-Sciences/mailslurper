@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mailslurper.fullname" . }}
+  labels:
+    {{- include "mailslurper.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 4436
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 1025
+      targetPort: smtps
+      protocol: TCP
+      name: smtps
+  selector:
+    {{- include "mailslurper.selectorLabels" . | nindent 4 }}

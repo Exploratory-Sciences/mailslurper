@@ -1,0 +1,17 @@
+pipeline:
+  name: mailslurper-release
+  identifier: mailslurperrelease
+  template:
+    templateRef: Create_Release
+    versionLabel: "1"
+    templateInputs:
+      properties:
+        ci:
+          codebase:
+            connectorRef: exploratorysciences
+            repoName: mailslurper
+            build: <+input>
+  tags:
+    mailslurper: ""
+  projectIdentifier: MetaPlay
+  orgIdentifier: ExploratorySciences

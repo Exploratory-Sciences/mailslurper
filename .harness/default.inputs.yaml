@@ -1,0 +1,24 @@
+inputSet:
+  name: default
+  tags: {}
+  identifier: default
+  orgIdentifier: ExploratorySciences
+  projectIdentifier: MetaPlay
+  pipeline:
+    identifier: mailslurperci
+    template:
+      templateInputs:
+        properties:
+          ci:
+            codebase:
+              build:
+                type: branch
+                spec:
+                  branch: <+trigger.branch>
+        variables:
+          - name: config_branch
+            type: String
+            value: master
+          - name: helm_args
+            type: String
+            value: <+>
