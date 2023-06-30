@@ -33,5 +33,5 @@ inputSet:
               build: <+input>
   cacheResponse:
     cacheState: VALID_CACHE
-    ttlLeft: 2591904504
-    lastUpdatedAt: 1688091800465
+    ttlLeft: 2591913461
+    lastUpdatedAt: 1688091916909
