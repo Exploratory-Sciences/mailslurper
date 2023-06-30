@@ -23,7 +23,7 @@ pipeline:
                                 identifier: chart
                                 type: HelmChart
                                 spec:
-                                  chartVersion: <+input>
+                                  chartVersion: <+pipeline.stages.build.spec.execution.steps.Set_Version.output.outputVariables.version>
                             - manifest:
                                 identifier: values
                                 type: Values
