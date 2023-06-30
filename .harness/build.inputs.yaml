@@ -21,17 +21,12 @@ inputSet:
           - name: config_branch
             type: String
             value: micah/new-clusters
-          - name: docker_build_args
-            type: String
-            value: <+input>
-          - name: docker_base_image
-            type: String
-            value: <+input>
         properties:
           ci:
             codebase:
               build: <+input>
   cacheResponse:
     cacheState: VALID_CACHE
-    ttlLeft: 2591971191
-    lastUpdatedAt: 1688097431744
+    ttlLeft: 2591920501
+    lastUpdatedAt: 1688097678325
+  object Object: pipeline.template.templateInputs.properties.ci.codebase
