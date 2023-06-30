@@ -23,15 +23,15 @@ inputSet:
             value: micah/new-clusters
           - name: docker_build_args
             type: String
-            value: "\"PIP_EXTRA_INDEX_URL=\"+<+pipeline.variables.pip_index_url>"
+            value: <+input>
           - name: docker_base_image
             type: String
-            value: <+>
+            value: <+input>
         properties:
           ci:
             codebase:
               build: <+input>
   cacheResponse:
     cacheState: VALID_CACHE
-    ttlLeft: 2591998854
-    lastUpdatedAt: 1688091785055
+    ttlLeft: 2591904504
+    lastUpdatedAt: 1688091800465
