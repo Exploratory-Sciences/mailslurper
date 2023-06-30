@@ -1,0 +1,16 @@
+pipeline:
+  name: release
+  identifier: release
+  template:
+    templateRef: account.Create_Release_Hosted
+    versionLabel: "1"
+    templateInputs:
+      properties:
+        ci:
+          codebase:
+            connectorRef: account.github
+            repoName: mailslurper
+            build: <+input>
+  tags: {}
+  projectIdentifier: mailslurper
+  orgIdentifier: default
