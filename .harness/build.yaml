@@ -70,7 +70,7 @@ pipeline:
           value: .
         - name: pip_index_url
           type: Secret
-          value: <+input>
+          value: ""
         - name: enforce_tests
           type: String
           default: "false"
