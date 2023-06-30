@@ -93,7 +93,7 @@ pipeline:
           value: <+input>
         - name: docker_build_args
           type: String
-          default: "\"PIP_EXTRA_INDEX_URL=\"+<+pipeline.variables.pip_index_url>"
+          default: ""
           value: <+input>
         - name: docker_base_image
           type: String
