@@ -1,5 +1,6 @@
 inputSet:
   name: build
+  tags: {}
   identifier: build
   orgIdentifier: default
   projectIdentifier: mailslurper
@@ -22,7 +23,7 @@ inputSet:
             value: "false"
           - name: config_branch
             type: String
-            value: master
+            value: micah/new-clusters
           - name: docker_build_args
             type: String
             value: "\"PIP_EXTRA_INDEX_URL=\"+<+pipeline.variables.pip_index_url>"
@@ -33,4 +34,7 @@ inputSet:
           ci:
             codebase:
               build: <+input>
-  object Object: pipeline.template.templateInputs.properties.ci.codebase
+  cacheResponse:
+    cacheState: VALID_CACHE
+    ttlLeft: 2591994784
+    lastUpdatedAt: 1688091733319
