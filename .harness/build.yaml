@@ -90,15 +90,15 @@ pipeline:
         - name: config_branch
           type: String
           default: master
-          value: <+input>
+          value: <+input>.default(micah/new-clusters)
         - name: docker_build_args
           type: String
           default: ""
-          value: <+input>
+          value: ""
         - name: docker_base_image
           type: String
           default: <+>
-          value: <+input>
+          value: ""
         - name: run_tests
           type: String
           default: "true"
