@@ -12,9 +12,6 @@ inputSet:
           - name: override_auto_publish
             type: String
             value: not_set
-          - name: pip_index_url
-            type: Secret
-            value: <+input>
           - name: enforce_tests
             type: String
             value: "false"
@@ -36,5 +33,5 @@ inputSet:
               build: <+input>
   cacheResponse:
     cacheState: VALID_CACHE
-    ttlLeft: 2591994784
-    lastUpdatedAt: 1688091733319
+    ttlLeft: 2591998854
+    lastUpdatedAt: 1688091785055
