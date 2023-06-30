@@ -1,0 +1,14 @@
+inputSet:
+  name: release
+  identifier: release
+  orgIdentifier: default
+  projectIdentifier: mailslurper
+  pipeline:
+    identifier: release
+    template:
+      templateInputs:
+        properties:
+          ci:
+            codebase:
+              build: <+input>
+  object Object: pipeline.template.templateInputs.properties.ci.codebase
