@@ -1,0 +1,117 @@
+pipeline:
+  name: build
+  identifier: build
+  template:
+    templateRef: account.Docker_Single_Stage_CI
+    versionLabel: "1.1"
+    templateInputs:
+      stages:
+        - stage:
+            identifier: dev
+            template:
+              templateInputs:
+                type: Deployment
+                spec:
+                  service:
+                    serviceRef: account.mailslurper
+                    serviceInputs:
+                      serviceDefinition:
+                        type: NativeHelm
+                        spec:
+                          manifests:
+                            - manifest:
+                                identifier: chart
+                                type: HelmChart
+                                spec:
+                                  chartVersion: <+input>
+                            - manifest:
+                                identifier: values
+                                type: Values
+                                spec:
+                                  store:
+                                    type: Github
+                                    spec:
+                                      branch: <+pipeline.variables.config_branch>
+                variables:
+                  - name: namespace
+                    type: String
+                    value: ""
+      variables:
+        - name: github_token
+          type: Secret
+          value: account.githubmetaplaybottoken
+        - name: override_auto_publish
+          type: String
+          default: not_set
+          value: <+input>.allowedValues(true,false,not_set)
+        - name: aws_account_id
+          type: Secret
+          value: account.awsdevelopmentaccountid
+        - name: aws_region
+          type: String
+          default: us-east-2
+          value: us-east-2
+        - name: aws_access_key
+          type: Secret
+          value: account.awsdevelopmentharnessaccesskey
+        - name: aws_secret_key
+          type: Secret
+          value: account.awsdevelopmentharnesssecretkey
+        - name: ecr_repository
+          type: String
+          value: mailslurper
+        - name: dockerfile
+          type: String
+          default: Dockerfile
+          value: Dockerfile
+        - name: docker_context
+          type: String
+          default: .
+          value: .
+        - name: pip_index_url
+          type: Secret
+          value: <+input>
+        - name: enforce_tests
+          type: String
+          default: "false"
+          value: <+input>.allowedValues(true,false)
+        - name: enforce_linting
+          type: String
+          default: "false"
+          value: <+input>.allowedValues(true,false)
+        - name: has_helm_chart
+          type: String
+          default: "true"
+          value: "true"
+        - name: has_docker_image
+          type: String
+          default: "true"
+          value: "true"
+        - name: config_branch
+          type: String
+          default: master
+          value: <+input>
+        - name: docker_build_args
+          type: String
+          default: "\"PIP_EXTRA_INDEX_URL=\"+<+pipeline.variables.pip_index_url>"
+          value: <+input>
+        - name: docker_base_image
+          type: String
+          default: <+>
+          value: <+input>
+        - name: run_tests
+          type: String
+          default: "true"
+          value: "false"
+        - name: run_linting
+          type: String
+          default: "true"
+          value: "false"
+      properties:
+        ci:
+          codebase:
+            build: <+input>
+            repoName: mailslurper
+  tags: {}
+  projectIdentifier: mailslurper
+  orgIdentifier: default
