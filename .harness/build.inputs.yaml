@@ -1,0 +1,36 @@
+inputSet:
+  name: build
+  identifier: build
+  orgIdentifier: default
+  projectIdentifier: mailslurper
+  pipeline:
+    identifier: build
+    template:
+      templateInputs:
+        variables:
+          - name: override_auto_publish
+            type: String
+            value: not_set
+          - name: pip_index_url
+            type: Secret
+            value: <+input>
+          - name: enforce_tests
+            type: String
+            value: "false"
+          - name: enforce_linting
+            type: String
+            value: "false"
+          - name: config_branch
+            type: String
+            value: master
+          - name: docker_build_args
+            type: String
+            value: "\"PIP_EXTRA_INDEX_URL=\"+<+pipeline.variables.pip_index_url>"
+          - name: docker_base_image
+            type: String
+            value: <+>
+        properties:
+          ci:
+            codebase:
+              build: <+input>
+  object Object: pipeline.template.templateInputs.properties.ci.codebase
